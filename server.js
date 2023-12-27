@@ -12,9 +12,6 @@ dotenv.config();
 
 const PORT = process.env.PORT;
 
-
-
-
 //middlewares
 app.use(cors());
 app.use(express.json())
@@ -25,10 +22,7 @@ app.use("/api/v1/auth", authRoute);
 app.use('/api/v1/books',bookRoute)
 app.use('/api/v1/transactions',transactionRoute)
 
-//protected routes
 
-
-//
 app.get('/',(req,res)=>{
     res.send("<h1>Welcome to Online Library</h1>")
 })
