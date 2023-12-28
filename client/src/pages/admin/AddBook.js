@@ -3,10 +3,10 @@ import Layout from "../../components/layout/Layout";
 import AdminMenu from "./AdminMenu";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 const AddBook = () => {
-    const navigate = useNavigate();
+  //  const navigate = useNavigate();
     const [name, setName] = useState("");
     const [author, setAuthor] = useState("");
 
