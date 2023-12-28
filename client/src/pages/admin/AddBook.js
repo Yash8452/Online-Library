@@ -25,22 +25,24 @@ const AddBook = () => {
                 bookData
             );
 
-            // Check the response status and handle accordingly
-            if (response.status === 200) {
-                const data = response.data;
-                if (data.success) {
-                    toast.error(data.message);
-                } else {
-                    toast.success("Book Added Successfully");
-                    navigate("/dashboard/admin/books");
-                }
-            } else {
-                toast.error("Failed to add book. Please try again.");
-            }
+            console.log(response)
+
+           // Check if the response indicates success
+        if (response.data.success) {
+           // navigate("/dashboard/admin/books");
+            toast.success("Book Added Successfully", {
+                duration: 5000
+            });
+            setName("")
+            setAuthor("")
+        } else {
+            toast.error("Failed to add book. Please try again.");
+        }
+
         } catch (error) {
             // Log the error for debugging purposes
             console.error("Error adding book:", error);
-            toast.error("Something went wrong while adding the book");
+            toast.error("Something went wrong");
         }
     };
 
@@ -65,7 +67,7 @@ const AddBook = () => {
                                 />
                             </div>
                             <div className="mb-3">
-                                <textarea
+                                <input
                                     type="text"
                                     value={author}
                                     placeholder="Enter the author"
@@ -76,7 +78,7 @@ const AddBook = () => {
 
 
                             <div className="mb-3">
-                                <button className="btn btn-primary" onClick={handleAdd}>
+                                <button className="btn btn-outline-success" onClick={handleAdd}>
                                     Add A Book
                                 </button>
                             </div>

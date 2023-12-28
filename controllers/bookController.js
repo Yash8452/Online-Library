@@ -103,7 +103,10 @@ const BookController = {
       });
   
       await newBook.save();
-      res.status(200).json(newBook);
+      res.status(200).json({
+        success:true,
+        message:"Book Added Successfully",
+        newBook});
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -8,7 +8,6 @@ const router = express.Router();
 router.get('/', BookController.getAllBooks);
 
 // Admin-only operations
-
 router.put('/issue/:bookId/:userId',formidable(),BookController.issueABook)
 router.put('/return/:bookId/:userId',formidable(),BookController.returnABook)
 router.post('/addBook', formidable(), BookController.addBook);

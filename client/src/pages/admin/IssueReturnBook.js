@@ -1,7 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import  { useNavigate }  from 'react-router-dom';
 
 const IssueReturnBook = ({ bookId, action }) => {
+  
+  const navigate = useNavigate();
   const [userId, setUserId] = useState('');
 
   const handleButtonClick = (e) => {
@@ -21,26 +25,36 @@ const IssueReturnBook = ({ bookId, action }) => {
         response = await axios.put(`http://localhost:5050/api/v1/books/return/${bookId}/${userId}`);
       }
 
-      if (response && response.status === 200) {
-        console.log(response.data); // Log the response or update state accordingly
+         // Check the response status and handle accordingly
+         if (response.status === 200) {
+          const data = response.data;
+          console.log(data)
+          if (data.success) {
+              toast.success("error")
+          } else {
+              navigate("/dashboard/admin/books");
+              toast.success("Book Added Successfully",{
+                  duration: 5000
+              });
+              setUserId("")
+          }
+          
       } else {
-        console.error('Unexpected response:', response);
+          toast.error("Failed to add book. Please try again.");
       }
+    
     } catch (error) {
       console.error('Error:', error);
-      // Handle error or display an error message
+      toast.error("Something went wrong")
     }
   };
 
   return (
     <div>
       
-        <button type="button" onClick={handleButtonClick} className="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button type="button" onClick={handleButtonClick} className="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
           {action === 'issue' ? 'Issue' : 'Return'}
         </button>
-
-        {/* // <button className='button-89' onClick={handleButtonClick}>{action === 'issue' ? 'Issue' : 'Return'} </button> */}
-
 
       {/* // <!-- Modal --> */}
       <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -60,8 +74,8 @@ const IssueReturnBook = ({ bookId, action }) => {
           />
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Close</button>
-              <button type="button" onClick={handleConfirm} data-bs-dismiss="modal" className="btn btn-success">{action === 'issue' ? 'Issue' : 'Return'}</button>
+              <button type="button" className="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+              <button type="button" onClick={handleConfirm} data-bs-dismiss="modal" className="btn btn-outline-success">{action === 'issue' ? 'Issue' : 'Return'}</button>
             </div>
           </div>
         </div>
